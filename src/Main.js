@@ -9,10 +9,21 @@ import Login from './Login';
 import Contact from './Contact';
 import PatientList from './PatientList';
 import PatientDetails from './PatientDetails';
+import { useEffect } from 'react';
+
 
 function Main() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        // Prompt the user to refresh the page
+        if (window.confirm('New version available! Do you want to refresh?')) {
+          window.location.reload();
+        }
+      });
+    }
+  }, []);
   const handleLogin = (status) => setIsLoggedIn(status);
 
   return (
