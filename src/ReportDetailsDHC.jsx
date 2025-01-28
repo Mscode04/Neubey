@@ -65,7 +65,7 @@ const ReportDetailsDHC = () => {
       <button className="rdhc-back-button" onClick={goBack}>
         &larr; Back
       </button>
-      <h2 className="rdhc-title">Patient Report Details</h2>
+      <h2 className="rdhc-title">DHC Report </h2>
       <div className="rdhc-content">
         {/* Personal Details */}
         <h3 className="rdhc-section-title">Personal Details</h3>

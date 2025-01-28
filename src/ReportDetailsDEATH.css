@@ -1,5 +1,5 @@
 /* General Styling */
-.rprogression-container {
+.rdeath-container {
     font-family: Arial, sans-serif;
     margin: 20px auto;
     padding: 20px;
@@ -8,43 +8,44 @@
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .rprogression-title {
+}
+
+.rdeath-title {
     text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
     color: #333;
-  }
-  
-  .rprogression-section-title {
+}
+
+.rdeath-section-title {
     font-size: 20px;
     margin-top: 20px;
     margin-bottom: 10px;
     color: #444;
     border-bottom: 2px solid #ddd;
     padding-bottom: 5px;
-  }
-  
-  .rprogression-field {
+}
+
+.rdeath-field {
     display: flex;
     justify-content: space-between;
     margin: 8px 0;
     font-size: 16px;
-  }
-  
-  .rprogression-field label {
+}
+
+.rdeath-field label {
     font-weight: bold;
     color: #555;
-  }
-  
-  .rprogression-field span {
+    text-transform: capitalize; /* Converts fields like 'mainDiagnosis' to 'Main Diagnosis' */
+}
+
+.rdeath-field span {
     color: #222;
     text-align: right;
-  }
-  
-  .rprogression-back-button,
-  .rprogression-print-button {
+}
+
+.rdeath-back-button,
+.rdeath-print-button {
     display: inline-block;
     padding: 10px 20px;
     margin: 10px 5px;
@@ -55,30 +56,28 @@
     color: #fff;
     background-color: #007bff;
     transition: background-color 0.3s ease;
-  }
-  
-  .rprogression-back-button:hover,
-  .rprogression-print-button:hover {
+}
+
+.rdeath-back-button:hover,
+.rdeath-print-button:hover {
     background-color: #0056b3;
-  }
-  
-  /* Hide buttons when printing */
-  @media print {
-    .rprogression-back-button,
-    .rprogression-print-button {
-      display: none;
+}
+
+/* Hide buttons when printing */
+@media print {
+    .rdeath-back-button,
+    .rdeath-print-button {
+        display: none;
     }
-  
-    .rprogression-container {
-      border: none;
-      box-shadow: none;
-      
+
+    .rdeath-container {
+        border: none;
+        box-shadow: none;
     }
-  
+
     body {
-      margin: 0;
-      padding: 0;
-      background-color: #fff;
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
     }
-  }
-  
+}

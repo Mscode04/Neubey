@@ -65,7 +65,7 @@ const ReportDetailsNHCE = () => {
       <button className="rnhce-back-button" onClick={goBack}>
         &larr; Back
       </button>
-      <h2 className="rnhce-title">Patient Report Details</h2>
+      <h2 className="rnhce-title">NHC(E) Report</h2>
       <div className="rnhce-content">
         {/* Personal Details */}
         <h3 className="rnhce-section-title">Personal Details</h3>
