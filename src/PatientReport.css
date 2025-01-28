@@ -1,0 +1,106 @@
+/* Report Details Container */
+.rnhc-container {
+  font-family: 'Arial', sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+/* Title */
+.rnhc-title {
+  text-align: center;
+  color: #005f73;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Section Titles */
+.rnhc-section-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #0a9396;
+  border-bottom: 2px solid #94d2bd;
+  padding-bottom: 5px;
+}
+
+/* Fields */
+.rnhc-field {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.rnhc-field label {
+  font-weight: bold;
+  color: #005f73;
+}
+
+.rnhc-field span {
+  color: #333;
+}
+
+/* Buttons */
+.rnhc-back-button,
+.rnhc-print-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #005f73;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.rnhc-back-button:hover,
+.rnhc-print-button:hover {
+  background-color: #0a9396;
+}
+
+/* Print Styles */
+@media print {
+  .rnhc-container {
+    width: 100%;
+    color: #000;
+    background-color: #fff;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .rnhc-back-button,
+  .rnhc-print-button {
+    display: none; /* Hide buttons on print */
+  }
+
+  .rnhc-title {
+    font-size: 1.5rem;
+    text-align: left;
+  }
+
+  .rnhc-section-title {
+    font-size: 1.2rem;
+    border: none;
+    margin-top: 15px;
+  }
+
+  .rnhc-field {
+    font-size: 0.9rem;
+    padding: 4px;
+    border: none;
+  }
+
+  @page {
+    size: A4;
+    margin: 1cm;
+  }
+}

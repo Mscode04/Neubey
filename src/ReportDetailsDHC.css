@@ -1,0 +1,82 @@
+/* General Styling */
+.rdhc-container {
+    font-family: Arial, sans-serif;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 800px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .rdhc-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .rdhc-section-title {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #444;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+  }
+  
+  .rdhc-field {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+    font-size: 16px;
+  }
+  
+  .rdhc-field label {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .rdhc-field span {
+    color: #222;
+    text-align: right;
+  }
+  
+  .rdhc-back-button,
+  .rdhc-print-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #007bff;
+    transition: background-color 0.3s ease;
+  }
+  
+  .rdhc-back-button:hover,
+  .rdhc-print-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Hide buttons when printing */
+  @media print {
+    .rdhc-back-button,
+    .rdhc-print-button {
+      display: none;
+    }
+  
+    .rdhc-container {
+      border: none;
+      box-shadow: none;
+    }
+  
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+    }
+  }

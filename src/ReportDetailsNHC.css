@@ -1,0 +1,82 @@
+/* General Styling */
+.rnhc-container {
+  font-family: Arial, sans-serif;
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 800px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.rnhc-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.rnhc-section-title {
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #444;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.rnhc-field {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.rnhc-field label {
+  font-weight: bold;
+  color: #555;
+}
+
+.rnhc-field span {
+  color: #222;
+  text-align: right;
+}
+
+.rnhc-back-button,
+.rnhc-print-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px 5px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #fff;
+  background-color: #007bff;
+  transition: background-color 0.3s ease;
+}
+
+.rnhc-back-button:hover,
+.rnhc-print-button:hover {
+  background-color: #0056b3;
+}
+
+/* Hide buttons when printing */
+@media print {
+  .rnhc-back-button,
+  .rnhc-print-button {
+    display: none;
+  }
+
+  .rnhc-container {
+    border: none;
+    box-shadow: none;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+  }
+}
