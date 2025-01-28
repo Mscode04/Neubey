@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Neubey/static/css/main.80b1c968.css",
+    "main.js": "/Neubey/static/js/main.9dc9cb2b.js",
+    "index.html": "/Neubey/index.html",
+    "main.80b1c968.css.map": "/Neubey/static/css/main.80b1c968.css.map",
+    "main.9dc9cb2b.js.map": "/Neubey/static/js/main.9dc9cb2b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.80b1c968.css",
+    "static/js/main.9dc9cb2b.js"
+  ]
+}
