@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from './Navbar';
 import { FaEnvelope, FaPhoneAlt } from 'react-icons/fa'; // Importing FontAwesome icons
-import Footer from './Footer';
+
 function Contact() {
   return (
     <>
@@ -26,7 +26,7 @@ function Contact() {
           </div>
         </div>
       </div>
-    <Footer/>
+   
     </>
   );
 }

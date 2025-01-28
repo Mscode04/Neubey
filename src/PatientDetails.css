@@ -1,88 +1,214 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5faff;
-    color: #333;
-    margin: 0;
-    padding: 0;
+/* Main Container */
+.PTDetail-container {
+  padding: 20px;
+  background-color: #288598;
+  min-height: 100vh;
+}
+
+/* Back Button */
+.PTDetail-backButton {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.PTDetail-backButton:hover {
+  text-decoration: underline;
+}
+
+/* Patient Card */
+.PTDetail-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+/* Profile Header */
+.PTDetail-profileHeader {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.PTDetail-profileImg {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Info Table */
+.PTDetail-infoTable {
+  overflow-x: auto; /* Make table scrollable on small screens */
+}
+
+.PTDetail-infoTable table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px; /* Minimum width for the table */
+}
+
+.PTDetail-infoTable td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.PTDetail-infoTable td:first-child {
+  font-weight: bold;
+  width: 30%;
+}
+
+/* Family Details */
+.PTDetail-familyDetails {
+  margin-top: 20px;
+  overflow-x: auto; /* Make table scrollable on small screens */
+}
+
+.PTDetail-familyDetails table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px; /* Minimum width for the table */
+}
+
+.PTDetail-familyDetails th,
+.PTDetail-familyDetails td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.PTDetail-familyDetails th {
+  background-color: #288598;
+  color: #fff;
+}
+
+/* Medicines and Equipments Sections */
+.PTDetail-medicinesContainer,
+.PTDetail-equipmentsContainer {
+  margin-top: 20px;
+  overflow-x: auto; /* Make table scrollable on small screens */
+}
+
+.PTDetail-medicinesContainer table,
+.PTDetail-equipmentsContainer table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px; /* Minimum width for the table */
+}
+
+.PTDetail-medicinesContainer th,
+.PTDetail-medicinesContainer td,
+.PTDetail-equipmentsContainer th,
+.PTDetail-equipmentsContainer td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.PTDetail-medicinesContainer th,
+.PTDetail-equipmentsContainer th {
+  background-color: #288598;
+  color: #fff;
+}
+
+/* Reports Section */
+.PTDetail-reportsContainer {
+  margin-top: 20px;
+  text-align: center;
+  background-color: #e3f2fd; /* Light blue background */
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.PTDetail-reportsLink {
+  text-decoration: none;
+  color: #288598;
+}
+
+.PTDetail-reportsLink:hover {
+  text-decoration: underline;
+}
+
+/* Action Buttons */
+.PTDetail-buttonsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.PTDetail-actionBtn {
+  background-color: #288598;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  flex: 1 1 calc(33.333% - 20px); /* 3 buttons in a row */
+  max-width: calc(33.333% - 20px); /* Limit button width */
+}
+
+.PTDetail-actionBtn:hover {
+  background-color: #1f6a7a;
+  color: #e3f2fd;
+}
+
+.PTDetail-smallBtn {
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+/* Update Button */
+.PTDetail-updateButton {
+  background-color: #4caf50; /* Green color */
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.PTDetail-updateButton:hover {
+  background-color: #45a049;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .PTDetail-actionBtn {
+    flex: 1 1 calc(50% - 20px); /* 2 buttons in a row on smaller screens */
+    max-width: calc(50% - 20px);
   }
-  
-  .patient-details {
-    width: 90%;
-    max-width: 1200px;
-    margin: 20px auto;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+}
+
+@media (max-width: 480px) {
+  .PTDetail-actionBtn {
+    flex: 1 1 100%; /* 1 button per row on very small screens */
+    max-width: 100%;
   }
-  
-  .patient-title {
-    color: #007acc;
-    text-align: center;
-    margin-bottom: 20px;
+}
+
+.PTDetail-printButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.PTDetail-printButton:hover {
+  background-color: #45a049;
+}
+@media print {
+  .hide-back-button {
+    display: none !important;
   }
-  
-  .general-info {
-    border-bottom: 2px solid #5cb6f5;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .patient-section {
-    margin-bottom: 30px;
-  }
-  
-  h2, h3 {
-    color: #007acc;
-    margin-bottom: 10px;
-  }
-  
-  .patient-table, .nested-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-  }
-  
-  .patient-table th, .nested-table th, 
-  .patient-table td, .nested-table td {
-    border: 1px solid #000000;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .patient-table th, .nested-table th {
-    background-color: #eaf6ff;
-    color: rgb(0, 0, 0);
-    text-transform: capitalize;
-  }
-  
-  .patient-table tr:nth-child(even),
-  .nested-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .patient-table tr:hover,
-  .nested-table tr:hover {
-    background-color: #d9ebff;
-  }
-  
-  .nested-table th, .nested-table td {
-    font-size: 14px;
-  }
-  
-  
-  @media print {
-    
-    .patient-details{
-      margin-top: -15px;
-    }
-    @page {
-      size: A4;
-      margin-top: 10px;
-      margin-bottom: 20px;
-      margin-left: -40px !important;
-      margin-right: -68px !important;
-    }
-    
-  }
-  
+}

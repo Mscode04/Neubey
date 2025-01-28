@@ -56,6 +56,7 @@ function Main() {
       <Route path="/report-details-investigation/:reportId" element={<ReportDetailsINVESTIGATION />} />
       <Route path="/report-details-social/:reportId" element={<ReportDetailsSOCIAL />} />
       <Route path="/report-details-progression/:reportId" element={<ReportDetailsPROGRESSION/>} />
+      
       <Route path="/contact" element={<Contact />} />
       <Route
         path="/patients"

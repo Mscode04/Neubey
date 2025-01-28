@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import Navbar from './Navbar';
-import Footer from './Footer';
+
 
 function App() {
   const [reports, setReports] = useState([]);
@@ -318,7 +318,7 @@ function App() {
           </div>
         )}
       </div>
-      <Footer />
+      
     </>
   );
 }
