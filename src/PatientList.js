@@ -15,7 +15,7 @@ const PatientList = () => {
   const [sortOrder, setSortOrder] = useState("asc"); // Sort order: asc or desc
   const [sortBy, setSortBy] = useState("name"); // Sort by: name or registernumber
   const [selectedStatus, setSelectedStatus] = useState("All"); // Filter by active/inactive
-  const patientsPerPage = 8;
+  const patientsPerPage = 50; // Display 10 patients per page
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -117,7 +117,6 @@ const PatientList = () => {
     navigate(`/patient-details/${patientId}`);
   };
 
-  
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -225,6 +224,7 @@ const PatientList = () => {
             <table className="patient-table">
               <thead>
                 <tr>
+                  <th>#</th> {/* Add index column */}
                   <th>Register Number</th>
                   <th>Name</th>
                   <th>Address</th>
@@ -235,30 +235,33 @@ const PatientList = () => {
                 </tr>
               </thead>
               <tbody>
-                {currentPatients.map((patient) => (
-                  <tr key={patient.id} onClick={() => handleCardClick(patient.id)}>
-                    <td data-label="Register Number">{patient.registernumber || "N/A"}</td>
-                    <td data-label="Name">{patient.name || "N/A"}</td>
-                    <td data-label="Address">{patient.address || "N/A"}</td>
-                    <td data-label="Phone">{patient.mainCaretakerPhone || "N/A"}</td>
-                    <td data-label="Diagnosis">{patient.mainDiagnosis || "N/A"}</td>
-                    <td data-label="Status">
-                      <span
-                        className="status-indicator"
-                        style={{ backgroundColor: patient.deactivated ? "red" : "green" }}
-                      ></span>
-                      {patient.deactivated ? "Inactive" : "Active"}
-                    </td>
-                    <td data-label="Actions">
-                      <button className="view-button">View</button>
-                    </td>
-                  </tr>
-                ))}
+                {currentPatients.map((patient, index) => {
+                  const patientIndex = indexOfFirstPatient + index + 1; // Calculate the index
+                  return (
+                    <tr key={patient.id} onClick={() => handleCardClick(patient.id)}>
+                      <td data-label="#">{patientIndex}</td> {/* Display the index */}
+                      <td data-label="Register Number">{patient.registernumber || "N/A"}</td>
+                      <td data-label="Name">{patient.name || "N/A"}</td>
+                      <td data-label="Address">{patient.address || "N/A"}</td>
+                      <td data-label="Phone">{patient.mainCaretakerPhone || "N/A"}</td>
+                      <td data-label="Diagnosis">{patient.mainDiagnosis || "N/A"}</td>
+                      <td data-label="Status">
+                        <span
+                          className="status-indicator"
+                          style={{ backgroundColor: patient.deactivated ? "red" : "green" }}
+                        ></span>
+                        {patient.deactivated ? "Inactive" : "Active"}
+                      </td>
+                      <td data-label="Actions">
+                        <button className="view-button">View</button>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
             {renderPagination()}
           </div>
-           
         )}
     </div>
     </>
