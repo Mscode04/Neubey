@@ -1,142 +1,55 @@
-/* Example CSS with unique class names starting with apphome- */
-.apphome-container {
-  max-width: 1200px;
-  margin: 0 auto;
+/* App.css */
+.app-container {
   padding: 20px;
 }
 
-.apphome-filter-container {
+.app-heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.filters-container {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 20px;
 }
 
-.apphome-filter-input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.filters-container .form-control {
+  flex: 1 1 200px;
 }
 
-.apphome-filter-select {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.app-table {
+  width: 100%;
+  margin-bottom: 20px;
 }
 
-.apphome-loading {
-  text-align: center;
-  font-size: 18px;
-  color: #555;
-}
-
-.apphome-error {
-  text-align: center;
-  font-size: 18px;
-  color: red;
-}
-
-.apphome-no-reports {
-  text-align: center;
-  font-size: 18px;
-  color: #555;
-}
-
-.apphome-report-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-  cursor: pointer;
-  transition: box-shadow 0.3s ease;
-}
-
-.apphome-report-card:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.apphome-delete-button {
-  background-color: #ff4d4d;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.apphome-delete-button:hover {
-  background-color: #cc0000;
-}
-.apphome-pagination li{
-  list-style-type: none;
-}
-.apphome-confirmation-box {
+.confirmation-box {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  background: white;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
 
-.apphome-pin-input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.confirmation-box p {
   margin-bottom: 10px;
 }
 
-.apphome-confirm-button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  cursor: pointer;
+.confirmation-box .form-control {
+  margin-bottom: 10px;
+}
+
+.confirmation-box button {
   margin-right: 10px;
 }
 
-.apphome-confirm-button:hover {
-  background-color: #45a049;
-}
-
-.apphome-cancel-button {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.apphome-cancel-button:hover {
-  background-color: #d32f2f;
-}
-
-.apphome-pagination {
-  display: flex;
+.pagination {
   justify-content: center;
-  margin-top: 20px;
 }
-
-.apphome-page-item {
-  margin: 0 5px;
-}
-
-.apphome-page-link {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.apphome-page-link:hover {
-  background-color: #000000;
-}
-
 /* Login Page */
 .login-container {
   position: relative; /* Set position to relative for pseudo-element positioning */

@@ -1,128 +1,303 @@
 /* Main container */
 .PatientTable-container {
-    padding: 20px;
-    background-color: #288598;
-    min-height: 100vh;
+  padding: 20px;
+  background-color: #288598;
+  min-height: 100vh;
+}
+
+/* Search bar */
+.PatientTable-search-bar {
+  margin-bottom: 20px;
+}
+
+.PatientTable-search-bar input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+
+.PatientTable-search-bar input:focus {
+  border-color: #288598;
+  box-shadow: 0 0 5px rgba(40, 133, 152, 0.5);
+}
+
+/* Patient cards grid */
+.PatientTable-patient-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Individual patient card */
+.PatientTable-patient-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.PatientTable-patient-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.PatientTable-profile-pic {
+  text-align: center;
+  padding: 20px;
+  color: #288598;
+  font-size: 50px;
+}
+.PatientTable-profile-pic img{
+  height: 40px;
+}
+.PatientTable-patient-info {
+  padding: 15px;
+  text-align: center;
+}
+
+.PatientTable-patient-info h5 {
+  margin: 0;
+  font-size: 18px;
+  color: #288598;
+}
+
+.PatientTable-patient-info p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Pagination */
+.PatientTable-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.PatientTable-pagination-btn {
+  background-color: transparent;
+  border: 1px solid #288598;
+  background-color: #fff;
+  color: #288598;
+  padding: 8px 12px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.PatientTable-pagination-btn:hover {
+  background-color: #fff;
+  color: #174c56;
+}
+
+.PatientTable-pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.PatientTable-pagination-btn.active {
+  background-color: #fff;
+  color: #288598;
+}
+
+/* Back button */
+.PatientTable-back-button {
+  background-color: transparent;
+  border: none;
+  color: #288598;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.PatientTable-back-button i {
+  margin-right: 5px;
+}
+
+.PatientTable-back-button:hover {
+  text-decoration: underline;
+}
+/* Filters container */
+.PatientTable-filters {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Label styling */
+.PatientTable-filters label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: bold;
+  color: #288598;
+}
+
+/* Dropdown select styling */
+.PatientTable-filters select {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.3s ease-in-out;
+  background-color: #fff;
+}
+
+.PatientTable-filters select:focus {
+  border-color: #288598;
+  box-shadow: 0 0 5px rgba(40, 133, 152, 0.5);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .PatientTable-filters {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  /* Search bar */
-  .PatientTable-search-bar {
-    margin-bottom: 20px;
-  }
-  
-  .PatientTable-search-bar input {
+
+  .PatientTable-filters label {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    outline: none;
+  }
+}
+/* Table Styles */
+.table-responsive {
+  overflow-x: auto;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.patient-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.patient-table th,
+.patient-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.patient-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+.patient-table tr:hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.view-button {
+  padding: 6px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Responsive Table */
+@media screen and (max-width: 768px) {
+  .patient-table {
+    border: 0;
   }
   
-  .PatientTable-search-bar input:focus {
-    border-color: #288598;
-    box-shadow: 0 0 5px rgba(40, 133, 152, 0.5);
+  .patient-table thead {
+    display: none;
   }
   
-  /* Patient cards grid */
-  .PatientTable-patient-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+  .patient-table tr {
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
   }
   
-  /* Individual patient card */
-  .PatientTable-patient-card {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+  .patient-table td {
+    display: block;
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+    border-bottom: 1px solid #eee;
   }
   
-  .PatientTable-patient-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-  
-  .PatientTable-profile-pic {
-    text-align: center;
-    padding: 20px;
-    color: #288598;
-    font-size: 50px;
-  }
-  
-  .PatientTable-patient-info {
-    padding: 15px;
-    text-align: center;
-  }
-  
-  .PatientTable-patient-info h5 {
-    margin: 0;
-    font-size: 18px;
-    color: #288598;
-  }
-  
-  .PatientTable-patient-info p {
-    margin: 5px 0;
-    font-size: 14px;
+  .patient-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    width: calc(50% - 15px);
+    padding-right: 10px;
+    text-align: left;
+    font-weight: bold;
     color: #666;
   }
   
-  /* Pagination */
-  .PatientTable-pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
+  .view-button {
+    width: 100%;
   }
-  
-  .PatientTable-pagination-btn {
-    background-color: transparent;
-    border: 1px solid #288598;
-    background-color: #fff;
-    color: #288598;
-    padding: 8px 12px;
-    margin: 0 5px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s, color 0.2s;
-  }
-  
-  .PatientTable-pagination-btn:hover {
-    background-color: #fff;
-    color: #174c56;
-  }
-  
-  .PatientTable-pagination-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  
-  .PatientTable-pagination-btn.active {
-    background-color: #fff;
-    color: #288598;
-  }
-  
-  /* Back button */
-  .PatientTable-back-button {
-    background-color: transparent;
-    border: none;
-    color: #288598;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .PatientTable-back-button i {
-    margin-right: 5px;
-  }
-  
-  .PatientTable-back-button:hover {
-    text-decoration: underline;
-  }
-  .PatientTable-back-button{
-    color: #fff;
-  }
+}
+
+.loading-container img{
+  height: 50px;
+}
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 8px;
+}
+
+.pagination button {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  background-color: #f8f9fa;
+  color: #007bff;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination button:disabled {
+  background-color: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
