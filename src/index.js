@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { HashRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import Main from './Main';
 import { register } from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
