@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom'; // Import BrowserRouter
+import { HashRouter as Router } from "react-router-dom";
 import Main from './Main';
 import { register } from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
@@ -8,9 +8,9 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename="/Neubey"> {/* Only one BrowserRouter */}
+    <Router basename="/Neubey"> {/* Only one BrowserRouter */}
       <Main />
-    </BrowserRouter>
+    </Router>
   </React.StrictMode>
 );
 
