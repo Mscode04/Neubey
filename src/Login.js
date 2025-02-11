@@ -20,7 +20,7 @@ function Login({ onLogin }) {
   }, []);
   const handleLogin = (e) => {
     e.preventDefault();
-    if (email === 'admin2012@gmail.com' && password === 'admin') {
+    if (email === '' && password === '') {
       onLogin(true);
       navigate('/');
     } else {
