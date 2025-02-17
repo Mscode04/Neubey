@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Navbar from './Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import * as XLSX from 'xlsx';
 const App = () => {
   const [reports, setReports] = useState([]);
   const [filteredReports, setFilteredReports] = useState([]);
@@ -137,150 +137,165 @@ const App = () => {
       toast.error("Incorrect PIN.");
     }
   };
+  const handleDownloadExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(filteredReports);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Reports');
 
+    // Define the filename
+    const filename = 'reports.xlsx';
+
+    // Use a library like FileSaver.js to save the file
+    XLSX.writeFile(workbook, filename);
+  };
   return (
     <>
       <Navbar />
-    <div className="app-container">
-      <ToastContainer position="top-center" autoClose={3000} />
-      <h2 className="app-heading">All Reports</h2>
+      <div className="app-container">
+        <ToastContainer position="top-center" autoClose={3000} />
+        <h2 className="app-heading">All Reports</h2>
 
-      {/* Filters */}
-      <div className="filters-container">
-        <input
-          type="text"
-          placeholder="Search by Name"
-          value={nameFilter}
-          onChange={(e) => setNameFilter(e.target.value)}
-          className="form-control"
-        />
-        <input
-          type="text"
-          placeholder="Search by Address"
-          value={addressFilter}
-          onChange={(e) => setAddressFilter(e.target.value)}
-          className="form-control"
-        />
-        <input
-          type="text"
-          placeholder="Search by Reg No"
-          value={regNoFilter}
-          onChange={(e) => setRegNoFilter(e.target.value)}
-          className="form-control"
-        />
-        <select
-          value={formTypeFilter}
-          onChange={(e) => setFormTypeFilter(e.target.value)}
-          className="form-control"
-        >
-          <option value="">All Form Types</option>
-          <option value="NHC">NHC</option>
-          <option value="NHC(E)">NHC(E)</option>
-          <option value="DHC">DHC</option>
-          <option value="PROGRESSION REPORT">Progression Report</option>
-          <option value="SOCIAL REPORT">Social Report</option>
-          <option value="VHC">VHC</option>
-          <option value="GVHC">GVHC</option>
-          <option value="INVESTIGATION">Investigation</option>
-          <option value="DEATH">Death</option>
-        </select>
-        <input
-          type="date"
-          placeholder="Start Date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-          className="form-control"
-        />
-        <input
-          type="date"
-          placeholder="End Date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-          className="form-control"
-        />
-        <select
-          value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value)}
-          className="form-control"
-        >
-          <option value="asc">Ascending</option>
-          <option value="desc">Descending</option>
-        </select>
-      </div>
-
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : (
-        <>
-          <table className="app-table table table-striped">
-            <thead>
-              <tr>
-                <th>Form Type</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Submitted At</th>
-                <th>Reg No</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentReports.map((report) => (
-                <tr key={report.id}>
-                  <td>
-                    <Link to={getReportDetailsRoute(report.formType, report.id)}>
-                      {report.formType}
-                    </Link>
-                  </td>
-                  <td>{report.name || "No Name"}</td>
-                  <td>{report.address || "No Address"}</td>
-                  <td>{report.submittedAt ? new Date(report.submittedAt).toLocaleString() : "No date available"}</td>
-                  <td>{report.registernumber || "No Register Number"}</td>
-                  <td>
-                    <button onClick={() => handleDeleteClick(report.id)} className="btn btn-danger">
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          {/* Pagination */}
-          <nav>
-            <ul className="pagination">
-              <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                <button onClick={() => paginate(currentPage - 1)} className="page-link">
-                  Previous
-                </button>
-              </li>
-        
-              <li className={`page-item ${currentPage === Math.ceil(filteredReports.length / reportsPerPage) ? 'disabled' : ''}`}>
-                <button onClick={() => paginate(currentPage + 1)} className="page-link">
-                  Next
-                </button>
-              </li>
-            </ul>
-          </nav>
-        </>
-      )}
-
-      {showConfirmation && (
-        <div className="confirmation-box">
-          <p>Enter PIN to delete the report:</p>
+        {/* Filters */}
+        <div className="filters-container">
           <input
-            type="password"
-            value={pin}
-            onChange={(e) => setPin(e.target.value)}
-            placeholder="Enter PIN"
+            type="text"
+            placeholder="Search by Name"
+            value={nameFilter}
+            onChange={(e) => setNameFilter(e.target.value)}
             className="form-control"
           />
-          <button onClick={handleConfirmDelete} className="btn btn-danger">Confirm</button>
-          <button onClick={() => setShowConfirmation(false)} className="btn btn-secondary">Cancel</button>
+          <input
+            type="text"
+            placeholder="Search by Address"
+            value={addressFilter}
+            onChange={(e) => setAddressFilter(e.target.value)}
+            className="form-control"
+          />
+          <input
+            type="text"
+            placeholder="Search by Reg No"
+            value={regNoFilter}
+            onChange={(e) => setRegNoFilter(e.target.value)}
+            className="form-control"
+          />
+          <select
+            value={formTypeFilter}
+            onChange={(e) => setFormTypeFilter(e.target.value)}
+            className="form-control"
+          >
+            <option value="">All Form Types</option>
+            <option value="NHC">NHC</option>
+            <option value="NHC(E)">NHC(E)</option>
+            <option value="DHC">DHC</option>
+            <option value="PROGRESSION REPORT">Progression Report</option>
+            <option value="SOCIAL REPORT">Social Report</option>
+            <option value="VHC">VHC</option>
+            <option value="GVHC">GVHC</option>
+            <option value="INVESTIGATION">Investigation</option>
+            <option value="DEATH">Death</option>
+          </select>
+          <input
+            type="date"
+            placeholder="Start Date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            className="form-control"
+          />
+          <input
+            type="date"
+            placeholder="End Date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            className="form-control"
+          />
+          <select
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            className="form-control"
+          >
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
         </div>
-      )}
-    </div>
+        {/* <button onClick={handleDownloadExcel} className="btn btn-primary">
+            Download to Excel
+          </button> */}
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : (
+          <>
+            <table className="app-table table table-striped table-bordered">
+              <thead className="thead-dark">
+                <tr>
+                  <th>Form Type</th>
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>Submitted At</th>
+                  <th>Reg No</th>
+                  <th>View</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentReports.map((report) => (
+                  <tr key={report.id}>
+                    <td>
+                      <Link to={getReportDetailsRoute(report.formType, report.id)} className="text-primary">
+                        {report.formType}
+                      </Link>
+                    </td>
+                    <td>{report.name || "No Name"}</td>
+                    <td>{report.address || "No Address"}</td>
+                    <td>{report.submittedAt ? new Date(report.submittedAt).toLocaleString() : "No date available"}</td>
+                    <td>{report.registernumber || "No Register Number"}</td>
+                    <td>   <Link to={getReportDetailsRoute(report.formType, report.id)} className="btn btn-primary btn-sm me-2 mb-3">
+                    <i className="bi bi-eye-fill"></i>
+                      </Link></td>
+                    <td>
+                      <button onClick={() => handleDeleteClick(report.id)} className="btn btn-danger">
+                      <i className="bi bi-trash-fill"></i>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {/* Pagination */}
+            <nav>
+              <ul className="pagination">
+                <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                  <button onClick={() => paginate(currentPage - 1)} className="page-link">
+                    Previous
+                  </button>
+                </li>
+                <li className={`page-item ${currentPage === Math.ceil(filteredReports.length / reportsPerPage) ? 'disabled' : ''}`}>
+                  <button onClick={() => paginate(currentPage + 1)} className="page-link">
+                    Next
+                  </button>
+                </li>
+              </ul>
+            </nav>
+          </>
+        )}
+
+        {showConfirmation && (
+          <div className="confirmation-box">
+            <p>Enter PIN to delete the report:</p>
+            <input
+              type="password"
+              value={pin}
+              onChange={(e) => setPin(e.target.value)}
+              placeholder="Enter PIN"
+              className="form-control"
+            />
+            <button onClick={handleConfirmDelete} className="btn btn-danger">Confirm</button>
+            <button onClick={() => setShowConfirmation(false)} className="btn btn-secondary">Cancel</button>
+          </div>
+        )}
+      </div>
     </>
   );
 };

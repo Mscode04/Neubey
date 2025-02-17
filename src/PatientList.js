@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./Firebase/config"; // Adjust the path if necessary
-import { collection, getDocs } from "firebase/firestore";
-import "./PatientList.css";
+import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import "./PatientList.css"; // Your custom CSS (if any)
 import Navbar from "./Navbar";
+import * as XLSX from 'xlsx';
 
-const PatientList = () => {
+const PatientTable = () => {
   const [patients, setPatients] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredPatients, setFilteredPatients] = useState([]);
@@ -15,7 +17,7 @@ const PatientList = () => {
   const [sortOrder, setSortOrder] = useState("asc"); // Sort order: asc or desc
   const [sortBy, setSortBy] = useState("name"); // Sort by: name or registernumber
   const [selectedStatus, setSelectedStatus] = useState("All"); // Filter by active/inactive
-  const patientsPerPage = 50; // Display 10 patients per page
+  const patientsPerPage = 100; // Show 10 patients per page
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,6 +41,11 @@ const PatientList = () => {
     fetchPatients();
   }, []);
 
+  const normalizeDiagnosis = (diagnosis) => {
+    if (!diagnosis) return [];
+    return diagnosis.split(",").map((d) => d.trim());
+  };
+
   useEffect(() => {
     let filtered = patients.filter((patient) => {
       const name = patient.name || "";
@@ -57,8 +64,9 @@ const PatientList = () => {
         registernumber.includes(searchQuery);
 
       // Diagnosis filter
+      const normalizedDiagnosis = normalizeDiagnosis(mainDiagnosis);
       const matchesDiagnosis =
-        selectedDiagnosis === "All" || patient.mainDiagnosis === selectedDiagnosis;
+        selectedDiagnosis === "All" || normalizedDiagnosis.includes(selectedDiagnosis);
 
       // Status filter (Active / Inactive)
       const matchesStatus =
@@ -110,162 +118,251 @@ const PatientList = () => {
 
   const uniqueDiagnoses = [
     "All",
-    ...new Set(patients.map((patient) => patient.mainDiagnosis).filter(Boolean)),
+    ...new Set(
+      patients
+        .flatMap((patient) => normalizeDiagnosis(patient.mainDiagnosis))
+        .filter(Boolean)
+    ),
   ];
 
-  const handleCardClick = (patientId) => {
+  const handleViewPatient = (patientId) => {
     navigate(`/patient-details/${patientId}`);
   };
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const handleDeletePatient = async (patientId) => {
+    if (window.confirm("Are you sure you want to delete this patient?")) {
+      const pin = prompt("Enter the confirmation PIN to proceed:");
+      
+      if (pin === "2012") {
+        try {
+          await deleteDoc(doc(db, "Patients", patientId));
+          setPatients(patients.filter((patient) => patient.id !== patientId));
+          setFilteredPatients(filteredPatients.filter((patient) => patient.id !== patientId));
+          alert("Patient deleted successfully!");
+        } catch (error) {
+          console.error("Error deleting patient: ", error);
+          alert("Failed to delete patient.");
+        }
+      } else {
+        alert("Incorrect PIN. Deletion canceled.");
+      }
+    }
   };
 
-  const renderPagination = () => {
-    const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(i);
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
     }
+  };
 
-    return (
-      <div className="pagination">
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        {pageNumbers.map((number) => (
-          <button
-            key={number}
-            onClick={() => handlePageChange(number)}
-            className={currentPage === number ? "active" : ""}
-          >
-            {number}
-          </button>
-        ))}
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-      </div>
-    );
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleDownloadExcel = () => {
+    // Prepare the data for Excel
+    const dataForExcel = filteredPatients.map((patient) => ({
+      'Register Number': patient.registernumber || 'N/A',
+      Name: patient.name || 'N/A',
+      Address: patient.address || 'N/A',
+      Phone: patient.mainCaretakerPhone || 'N/A',
+      Diagnosis: normalizeDiagnosis(patient.mainDiagnosis).join(', ') || 'N/A',
+      Status: patient.deactivated ? 'Inactive' : 'Active',
+    }));
+
+    // Create a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
+
+    // Create a workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Patients');
+
+    // Define the filename
+    const filename = 'patients.xlsx';
+
+    // Save the workbook as an Excel file
+    XLSX.writeFile(workbook, filename);
   };
 
   return (
-    <><Navbar></Navbar>
-    <div className="PatientTable-container">
-      <button className="PatientTable-back-button" style={{color:'#fff'}} onClick={() => navigate(-1)}>
-        <i className="bi bi-arrow-left" ></i> Back
-      </button>
+    <>
+      <Navbar />
+      <div className="container mt-4">
+        <button className="btn btn-secondary mb-3" onClick={() => navigate(-1)}>
+          <i className="bi bi-arrow-left"></i> Back
+        </button>
 
-      <div className="PatientTable-search-bar">
-        <input
-          type="text"
-          placeholder="Search by name, phone number, address, diagnosis, or register number..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </div>
+        {/* Display total number of patients */}
+        <div className="mb-3">
+          <strong>Total Patients:</strong> {filteredPatients.length}
+        </div>
 
-      {/* Filters */}
-      <div className="PatientTable-filters">
-        <label>
-          Filter by Diagnosis:
-          <select value={selectedDiagnosis} onChange={(e) => setSelectedDiagnosis(e.target.value)}>
-            {uniqueDiagnoses.map((diagnosis) => (
-              <option key={diagnosis} value={diagnosis}>
-                {diagnosis}
-              </option>
-            ))}
-          </select>
-        </label>
+        {/* Search Bar */}
+        <div className="mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search by name, phone number, address, diagnosis, or register number..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
 
-        <label>
-          Filter by Status:
-          <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)}>
-            <option value="All">All</option>
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-          </select>
-        </label>
+        {/* Filters */}
+        <div className="row mb-3">
+          <div className="col-md-3">
+            <label>
+              Filter by Diagnosis:
+              <select
+                className="form-control"
+                value={selectedDiagnosis}
+                onChange={(e) => setSelectedDiagnosis(e.target.value)}
+              >
+                {uniqueDiagnoses.map((diagnosis) => (
+                  <option key={diagnosis} value={diagnosis}>
+                    {diagnosis}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <div className="col-md-3">
+            <label>
+              Filter by Status:
+              <select
+                className="form-control"
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value)}
+              >
+                <option value="All">All</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </label>
+          </div>
+          <div className="col-md-3">
+            <label>
+              Sort by:
+              <select
+                className="form-control"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+              >
+                <option value="name">Name</option>
+                <option value="registernumber">Register Number</option>
+              </select>
+            </label>
+          </div>
+          <div className="col-md-3">
+            <label>
+              Order:
+              <select
+                className="form-control"
+                value={sortOrder}
+                onChange={(e) => setSortOrder(e.target.value)}
+              >
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+              </select>
+            </label>
+          </div>
+        </div>
 
-        <label>
-          Sort by:
-          <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-            <option value="name">Name</option>
-            <option value="registernumber">Register Number</option>
-          </select>
-        </label>
+        {/* <div className="mb-3">
+          <button onClick={handleDownloadExcel} className="btn btn-primary">
+            Download to Excel
+          </button>
+        </div> */}
 
-        <label>
-          Order:
-          <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
-          </select>
-        </label>
-      </div>
-
-      {isLoading ? (
-          <div className="PatientTable-loading-indicator">
-            <div className="loading-container">
-              <img
-                src="https://media.giphy.com/media/YMM6g7x45coCKdrDoj/giphy.gif"
-                alt="Loading..."
-                className="loading-image"
-              />
+        {isLoading ? (
+          <div className="text-center">
+            <div className="spinner-border" role="status">
+              <span className="visually-hidden">Loading...</span>
             </div>
           </div>
         ) : (
-          <div className="table-responsive">
-            <table className="patient-table">
-              <thead>
+          <>
+            {/* Patient Table */}
+            <table className="table table-striped table-bordered table-hover">
+              <thead className="thead-dark">
                 <tr>
-                  <th>#</th> {/* Add index column */}
                   <th>Register Number</th>
                   <th>Name</th>
                   <th>Address</th>
                   <th>Phone</th>
                   <th>Diagnosis</th>
                   <th>Status</th>
-                  <th>Actions</th>
+                  <th>View</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
-                {currentPatients.map((patient, index) => {
-                  const patientIndex = indexOfFirstPatient + index + 1; // Calculate the index
-                  return (
-                    <tr key={patient.id} onClick={() => handleCardClick(patient.id)}>
-                      <td data-label="#">{patientIndex}</td> {/* Display the index */}
-                      <td data-label="Register Number">{patient.registernumber || "N/A"}</td>
-                      <td data-label="Name">{patient.name || "N/A"}</td>
-                      <td data-label="Address">{patient.address || "N/A"}</td>
-                      <td data-label="Phone">{patient.mainCaretakerPhone || "N/A"}</td>
-                      <td data-label="Diagnosis">{patient.mainDiagnosis || "N/A"}</td>
-                      <td data-label="Status">
-                        <span
-                          className="status-indicator"
-                          style={{ backgroundColor: patient.deactivated ? "red" : "green" }}
-                        ></span>
+                {currentPatients.map((patient) => (
+                  <tr key={patient.id} className="bg-light">
+                    <td>{patient.registernumber || "N/A"}</td>
+                    <td>{patient.name || "N/A"}</td>
+                    <td>{patient.address || "N/A"}</td>
+                    <td>{patient.mainCaretakerPhone || "N/A"}</td>
+                    <td>{normalizeDiagnosis(patient.mainDiagnosis).join(", ") || "N/A"}</td>
+                    <td>
+                      <span
+                        style={{
+                          color: patient.deactivated ? "red" : "green",
+                        }}
+                      >
                         {patient.deactivated ? "Inactive" : "Active"}
-                      </td>
-                      <td data-label="Actions">
-                        <button className="view-button">View</button>
-                      </td>
-                    </tr>
-                  );
-                })}
+                      </span>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-primary btn-sm me-2 mb-3"
+                        onClick={() => handleViewPatient(patient.id)}
+                      >
+                        <i className="bi bi-eye-fill"></i>
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => handleDeletePatient(patient.id)}
+                      >
+                        <i className="bi bi-trash-fill"></i>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
-            {renderPagination()}
-          </div>
+
+            {/* Pagination */}
+            <div className="d-flex justify-content-center">
+              <nav>
+                <ul className="pagination">
+                  <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                    <button className="page-link" onClick={handlePreviousPage}>
+                      Previous
+                    </button>
+                  </li>
+                  <li className="page-item active">
+                    <span className="page-link">
+                      Page {currentPage} of {totalPages}
+                    </span>
+                  </li>
+                  <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                    <button className="page-link" onClick={handleNextPage}>
+                      Next
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </>
         )}
-    </div>
+      </div>
     </>
   );
 };
 
-export default PatientList;
+export default PatientTable;
