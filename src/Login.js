@@ -35,7 +35,7 @@ function Login({ onLogin }) {
         <div>
           <label>Username:</label>
           <input
-            type="email"
+            type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
