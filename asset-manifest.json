@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Neubey/static/css/main.be732cde.css",
-    "main.js": "/Neubey/static/js/main.dcf224ff.js",
+    "main.css": "/Neubey/static/css/main.68db333c.css",
+    "main.js": "/Neubey/static/js/main.6d86af83.js",
     "index.html": "/Neubey/index.html",
-    "main.be732cde.css.map": "/Neubey/static/css/main.be732cde.css.map",
-    "main.dcf224ff.js.map": "/Neubey/static/js/main.dcf224ff.js.map"
+    "main.68db333c.css.map": "/Neubey/static/css/main.68db333c.css.map",
+    "main.6d86af83.js.map": "/Neubey/static/js/main.6d86af83.js.map"
   },
   "entrypoints": [
-    "static/css/main.be732cde.css",
-    "static/js/main.dcf224ff.js"
+    "static/css/main.68db333c.css",
+    "static/js/main.6d86af83.js"
   ]
 }
